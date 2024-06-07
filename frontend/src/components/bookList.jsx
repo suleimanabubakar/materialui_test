@@ -3,7 +3,7 @@ import { useState,useEffect, useRef } from "react"
 
 import BookItem from "./bookItem"
 import NotFoundTile from "./NotFoundTile"
-const BookL  = ({addedBooks,setAddedBooks,books,updateList}) => {
+const BookList  = ({addedBooks,setAddedBooks,books,updateList}) => {
 
     const [show,setShow] = useState(false)
     const [searchText,setSearchText] = useState('');
@@ -11,17 +11,14 @@ const BookL  = ({addedBooks,setAddedBooks,books,updateList}) => {
     const anchorRef = useRef(null);
 
    
-
+    // filtering search text
     useEffect(() => {
         const filtered = books.filter((book) => book.title.toLowerCase().includes(searchText.toLowerCase()));
         setFilteredBooks(filtered);
       }, [searchText, books]);
     
 
-      const handleClick = () => {
-        setShow((prev) => !prev);
-      };
-    
+  
       const handleClose = () => {
         setShow(false);
       };
@@ -32,7 +29,7 @@ const BookL  = ({addedBooks,setAddedBooks,books,updateList}) => {
 
        
         
-        <TextField 
+        <TextField style={{marginTop:40}}
         ref={anchorRef}
                 value={searchText}
                 onChange={(e)=>setSearchText(e.target.value)}
@@ -81,4 +78,4 @@ const BookL  = ({addedBooks,setAddedBooks,books,updateList}) => {
     )
 }
 
-export default BookL;
+export default BookList;

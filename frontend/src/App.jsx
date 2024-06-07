@@ -1,29 +1,28 @@
 import { useState } from 'react'
 
 import './App.css'
-import { Button, Typography, Container, Grid,  Card, CardMedia, CardContent, IconButton, CardActions} from '@mui/material';
+import {Typography, Container, Grid} from '@mui/material';
 
-import BookL from './components/books';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import Loader from './components/spinner';
 import { GET_BOOKS } from './api/books';
 import EmptyBookList from "./components/EmptyBookList"
 
-import DeleteIcon from '@mui/icons-material/Delete';
-
-
-
+import Ello from './components/logo';
+import BookList from './components/bookList';
+import BookCard from './components/bookCard';
 
 
 
 function App() {
-  const [count, setCount] = useState(0)
 
   const [addedBooks,setAddedBooks] = useState([])
 
 
+  // fetching for the books
   const { loading, error, data } = useQuery(GET_BOOKS);
 
+  // updating added books
   const updateList = (book,added) => {
     if(added){
         setAddedBooks((prevBooks)=>prevBooks.filter(abook=>!(abook.title === book.title && abook.author === book.author)))
@@ -37,16 +36,13 @@ function App() {
 
 
 
-  console.log('books are ', data)
-
   return (
     <Container>
 
-    <Typography variant="h5" component="h1" color="primary.main">
-      Welcome Back, Suleiman.s
-    </Typography>
+    <Ello />
 
-    <BookL updateList={updateList} books={data.books} addedBooks={addedBooks} setAddedBooks={setAddedBooks} />
+
+    <BookList updateList={updateList} books={data.books} addedBooks={addedBooks} setAddedBooks={setAddedBooks} />
 
 
 
@@ -64,36 +60,7 @@ function App() {
 
     addedBooks.map((book, index) => (
         <Grid item xs={12} md={3} key={index}>
-          <Card>
-            <CardMedia
-              component="img"
-              height="150"
-              image={book.coverPhotoURL}
-              alt={book.title}
-            />
-            <CardContent>
-              <Typography variant="h6" align="left" component="div">
-                {book.title}
-              </Typography>
-              <Typography align="left" variant="body2" color="text.secondary">
-                by {book.author}
-              </Typography>
-
-            </CardContent>
-        <CardActions>
-               
-        <IconButton
-        aria-label="delete"
-      
-        onClick={()=>updateList(book,true)}
-        // style={{ position: 'absolute', bottom: 10, right: 10, color: 'red' }}
-      >
-        <DeleteIcon />
-
-      </IconButton>
-
-        </CardActions>
-          </Card>
+            <BookCard  book={book} updateList={updateList} />
         </Grid>
       ))}
      

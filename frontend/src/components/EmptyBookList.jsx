@@ -10,7 +10,7 @@ const EmptyBookList = () => {
         <BookIcon  style={{fontSize: 50, marginRight: 10}} />
 
 <Typography color='text.secondary' variant="h5" >
-        No Book Added
+        No Books Added
     </Typography>
         </Grid>
         </>
